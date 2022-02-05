@@ -1,7 +1,10 @@
 [package]
 name = "rcPDF"
 version = "0.1.0"
+authors = ["Alexander Rolley"]
 edition = "2021"
+description = "Create PDF's in rust."
+license = "GNU GPLv3"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
