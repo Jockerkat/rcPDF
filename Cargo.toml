@@ -1,9 +1,11 @@
 [package]
 name = "rc_pdf"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Alexander Rolley"]
 edition = "2021"
-description = "Create PDF's in rust."
+description = "Create PDFs in rust."
+readme = "README.md"
+repository = "https://github.com/Jockerkat/rcPDF"
 license = "GPL-3.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
