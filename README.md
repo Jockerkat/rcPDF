@@ -1,5 +1,5 @@
 [![Crate](https://img.shields.io/crates/v/rc_pdf?style=flat-square)](https://crates.io/crates/rc_pdf)
-[![License](https://img.shields.io/crates/l/rc_pdf?style=flat-square)](https://github.com/Jockerkat/rcPDF/blob/master/LICENSE.md)
+[![Licence](https://img.shields.io/crates/l/rc_pdf?style=flat-square)](https://gitlab.com/Jockerkat/rcpdf/-/blob/master/Licence.md)
 [![Maintenance](https://img.shields.io/maintenance/yes/2022?style=flat-square)]()
 
 # rcPDF
@@ -20,7 +20,7 @@ Also, I'm new to the rust programming language, so please bear that in mind.
 
 - [FAQ](#faq)
 - [Changelog](#changelog)
-- [License](#license)
+- [Licence](#licence)
 - [Credits](#credits)
 
 ## FAQ
@@ -39,7 +39,7 @@ Also, I'm new to the rust programming language, so please bear that in mind.
 
 View the changelog [here](CHANGELOG.md).
 
-## License
+## Licence
 
 View the licence [here](LICENCE.md).
 
