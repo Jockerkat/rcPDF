@@ -13,8 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-pub mod margins;
-pub mod mm;
-pub mod position;
-pub mod rectangle;
-pub mod xref_table_entry;
+use crate::objects::object::Object;
+
+/// Umbrella trait for direct objects.
+pub trait DirectObject: Object {}

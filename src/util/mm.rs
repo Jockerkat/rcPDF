@@ -13,29 +13,64 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-#[derive(Debug)]
+use std::ops::Mul;
+
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct MM(f64);
 
 impl From<i8> for MM {
-    fn from(millimeter: i8) -> MM {
-        MM(millimeter.into())
+    fn from(millimeters: i8) -> MM {
+        MM(millimeters.into())
     }
 }
 
 impl From<i16> for MM {
-    fn from(millimeter: i16) -> MM {
-        MM(millimeter.into())
+    fn from(millimeters: i16) -> MM {
+        MM(millimeters.into())
+    }
+}
+
+impl From<i32> for MM {
+    fn from(millimeters: i32) -> MM {
+        MM(millimeters.into())
     }
 }
 
 impl From<u8> for MM {
-    fn from(millimeter: u8) -> MM {
-        MM(millimeter.into())
+    fn from(millimeters: u8) -> MM {
+        MM(millimeters.into())
     }
 }
 
 impl From<u16> for MM {
-    fn from(millimeter: u16) -> MM {
-        MM(millimeter.into())
+    fn from(millimeters: u16) -> MM {
+        MM(millimeters.into())
+    }
+}
+
+impl From<u32> for MM {
+    fn from(millimeters: u32) -> MM {
+        MM(millimeters.into())
+    }
+}
+
+impl From<f32> for MM {
+    fn from(millimeters: f32) -> MM {
+        MM(millimeters.into())
+    }
+}
+
+impl From<f64> for MM {
+    fn from(millimeters: f64) -> MM {
+        MM(millimeters)
+    }
+}
+
+impl Mul<f64> for MM {
+    type Output = Self;
+
+    fn mul(self, rhs: f64) -> Self::Output {
+        let result = self.0 * rhs;
+        MM(result)
     }
 }

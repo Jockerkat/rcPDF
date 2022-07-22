@@ -13,26 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-/// The rotation of an element in the PDF document, in arc degrees.
-#[derive(Debug)]
-pub struct Rotation {
-    pub arc_degrees: f64,
-}
+use crate::objects::object::Object;
 
-impl Rotation {
-    pub fn new(arc_degrees: f64) -> Rotation {
-        let normalised_degrees: f64 = arc_degrees % 360.0;
-
-        let degrees: f64 = if normalised_degrees > 180.0 {
-            normalised_degrees - 360.0
-        } else if normalised_degrees < -180.0 {
-            360.0 + normalised_degrees
-        } else {
-            normalised_degrees
-        };
-
-        Rotation {
-            arc_degrees: degrees,
-        }
-    }
-}
+/// Umbrella trait for indirect objects.
+pub trait IndirectObject: Object {}

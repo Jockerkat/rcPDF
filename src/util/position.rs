@@ -13,24 +13,82 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use super::mm;
+use crate::MM;
 
-/// The position/z-height of an element in the PDF document, in millimeters/i8 respectively.
-#[derive(Debug)]
+/// The position of an element in the PDF document, in millimeters.
+#[derive(Copy, Clone, Debug)]
 pub struct Position {
-    pub x_coordinate: mm::MM,
-    pub y_coordinate: mm::MM,
-    pub z_index: i8,
+    x_lower_left: MM,
+    y_lower_left: MM,
 }
 
 impl Position {
-    pub fn new(x_coordinate: impl Into<mm::MM>,
-               y_coordinate: impl Into<mm::MM>,
-               z_index: i8) -> Position {
+    pub fn new(x_lower_left: impl Into<MM>, y_lower_left: impl Into<MM>) -> Position {
         Position {
-            x_coordinate: x_coordinate.into(),
-            y_coordinate: y_coordinate.into(),
-            z_index,
+            x_lower_left: x_lower_left.into(),
+            y_lower_left: y_lower_left.into(),
         }
+    }
+
+    pub fn x_lower_left(&self) -> MM {
+        self.x_lower_left
+    }
+
+    pub fn y_lower_left(&self) -> MM {
+        self.y_lower_left
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::util::mm::MM;
+    use crate::util::position::Position;
+
+    #[test]
+    fn positive_integer_values_test() {
+        let position: Position = Position::new(5, 5);
+
+        assert_eq!(position.x_lower_left(), MM::from(5.0));
+        assert_eq!(position.y_lower_left(), MM::from(5.0));
+    }
+
+    #[test]
+    fn negative_integer_values_test() {
+        let position: Position = Position::new(-5, -5);
+
+        assert_eq!(position.x_lower_left(), MM::from(-5.0));
+        assert_eq!(position.y_lower_left(), MM::from(-5.0));
+    }
+
+    #[test]
+    fn mixed_integer_values_test() {
+        let position: Position = Position::new(5, -5);
+
+        assert_eq!(position.x_lower_left(), MM::from(5.0));
+        assert_eq!(position.y_lower_left(), MM::from(-5.0));
+    }
+
+    #[test]
+    fn positive_float_values_test() {
+        let position: Position = Position::new(175.0, 175.0);
+
+        assert_eq!(position.x_lower_left(), MM::from(175.0));
+        assert_eq!(position.y_lower_left(), MM::from(175.0));
+    }
+
+    #[test]
+    fn negative_float_values_test() {
+        let position: Position = Position::new(-175.0, -175.0);
+
+        assert_eq!(position.x_lower_left(), MM::from(-175.0));
+        assert_eq!(position.y_lower_left(), MM::from(-175.0));
+    }
+
+    #[test]
+    fn mixed_float_values_test() {
+        let position: Position = Position::new(175.0, -175.0);
+
+        assert_eq!(position.x_lower_left(), MM::from(175.0));
+        assert_eq!(position.y_lower_left(), MM::from(-175.0));
     }
 }

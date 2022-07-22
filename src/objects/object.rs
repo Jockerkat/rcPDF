@@ -13,20 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use super::mm;
+use std::fmt;
 
-/// The size of an element in the PDF document, in millimeters.
-#[derive(Debug)]
-pub struct Size {
-    pub width: mm::MM,
-    pub height: mm::MM,
-}
-
-impl Size {
-    pub fn new(width: impl Into<mm::MM>, height: impl Into<mm::MM>) -> Size {
-        Size {
-            width: width.into(),
-            height: height.into(),
-        }
-    }
-}
+/// An umbrella trait for all objects in the PDF ISO specification,
+/// as defined in ISO 32000-1:2008, 7 "Syntax", 7.3 "Objects".
+pub trait Object: fmt::Display {}

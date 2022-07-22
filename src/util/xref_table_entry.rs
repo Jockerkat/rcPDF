@@ -13,8 +13,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-pub mod margins;
-pub mod mm;
-pub mod position;
-pub mod rectangle;
-pub mod xref_table_entry;
+/// Struct that holds a cross-reference table entry of an object. The correct
+/// formatting of the entry is left up to the struct's user.
+pub struct XRefTableEntry {
+    byte_offset: u32,
+    generation_number: u32,
+}
+
+impl XRefTableEntry {
+    pub fn new(byte_offset: u32, generation_number: u32) -> XRefTableEntry {
+        XRefTableEntry {
+            byte_offset,
+            generation_number,
+        }
+    }
+
+    /// Get the byte offset in the decoded stream of the object.
+    pub fn byte_offset(&self) -> u32 {
+        self.byte_offset
+    }
+
+    /// Get the generation number of the object.
+    pub fn generation_number(&self) -> u32 {
+        self.generation_number
+    }
+}

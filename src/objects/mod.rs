@@ -13,8 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-pub mod margins;
-pub mod mm;
-pub mod position;
-pub mod rectangle;
-pub mod xref_table_entry;
+pub mod direct_object;
+pub mod direct_objects;
+pub mod indirect_object;
+pub mod indirect_objects;
+pub mod null_object;
+pub mod object;

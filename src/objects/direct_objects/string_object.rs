@@ -13,8 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-pub mod margins;
-pub mod mm;
-pub mod position;
-pub mod rectangle;
-pub mod xref_table_entry;
+use crate::objects::direct_object::DirectObject;
+use crate::objects::object::Object;
+
+/// Trait for string objects as an umbrella for literal string and hexadecimal
+/// string objects.
+pub trait StringObject: Object + DirectObject {}

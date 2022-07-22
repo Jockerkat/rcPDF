@@ -13,8 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-pub mod margins;
-pub mod mm;
-pub mod position;
-pub mod rectangle;
-pub mod xref_table_entry;
+pub mod array_object;
+pub mod boolean_object;
+pub mod dictionary_object;
+pub mod hexadecimal_string_object;
+pub mod integer_number_object;
+pub mod literal_string_object;
+pub mod name_object;
+pub mod numeric_object;
+pub mod real_number_object;
+pub mod string_object;
