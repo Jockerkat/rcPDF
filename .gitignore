@@ -1,6 +1,7 @@
 # Directories
 /target
 /.idea
+/_src_old
 
 # Files
 Cargo.lock
