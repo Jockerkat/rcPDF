@@ -1,0 +1,53 @@
+variables:
+  DEFAULT_RUST_VERSION: "latest"
+
+stages:
+  - Static Analysis
+  - Tests
+
+.default_rules:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: always
+
+default:
+  before_script:
+    - rustc --version
+    - cargo --version
+
+Tests:
+  stage: Tests
+  image: rust:$DEFAULT_RUST_VERSION
+  script:
+    - cargo test --verbose
+  rules:
+    - !reference [.default_rules, rules]
+
+Clippy:
+  stage: Static Analysis
+  image: rust:$DEFAULT_RUST_VERSION
+  script:
+    - rustup component add clippy
+    - cargo clippy -- -D warnings
+  allow_failure: true
+  rules:
+    - !reference [.default_rules, rules]
+
+Rustfmt:
+  stage: Static Analysis
+  image: rust:$DEFAULT_RUST_VERSION
+  script:
+    - rustup component add rustfmt
+    - cargo fmt --all -- --check
+  rules:
+    - !reference [.default_rules, rules]
+
+Audit-Crates:
+  stage: Static Analysis
+  image: rust:$DEFAULT_RUST_VERSION
+  script:
+    - cargo install cargo-audit
+    - cargo audit
+  rules:
+    - !reference [.default_rules, rules]
