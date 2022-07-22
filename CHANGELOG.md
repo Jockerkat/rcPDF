@@ -4,24 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased: 0.1.1]
+## [Unreleased: 0.2.0]
+
 ### Added
-- This file (`CHANGELOG.md`).
-- The readme file (`README.md`) with two badges (crates.io version and license) and placeholder about, table of contents and faq sections.
-- Readme and repository metadata to `Cargo.toml`.
-- Utilities for object margins, size, rotation and position.
-- Structs for the size and orientation of a paper (a page in the PDF document).
+- The following files: `CHANGELOG.md`, `README.md`, and `rustfmt.toml`.
+- `Cargo.toml`: *readme* and *repository* metadata.
+- `Cargo.toml`: added `regex`, `lazy_static`, and `log` dependencies.
+- All objects as defined in *ISO 32000-1:2008*, 7 "Syntax", 7.3 "Objects".
+- Utilities: `margins`, `position`, and `mm` (base unit).
+- Filters: `ASCII85Decode` and `ASCIIHexDecode` encoders.
+- Repository icon.
+- GitHub and GitLab CI.
 
 ### Changed
-- Updated the version metadata in `Cargo.toml` to `0.1.1`.
+- `Cargo.toml`: updated the version metadata to `0.2.0`.
 
 ### Fixed
-- Typo in the description metadata in `Cargo.toml`.
+- `Cargo.toml`: typo in the description metadata.
 
 ## [0.1.0] 2022-02-05
+
 ### Added
-- The GNU GPLv3 license in `LICENSE.md`.
-- Authors, description and license metadata to `Cargo.toml`.
+- GNU GPLv3 licence.
+- `Cargo.toml`: authors, description and licence metadata.
 
 ### Changed
-- Updated .gitignore to ignore the `/.idea/` directory.
+- Updated `.gitignore` to ignore the `/.idea/` directory.
