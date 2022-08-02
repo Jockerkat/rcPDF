@@ -13,9 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-pub mod direct_object;
-pub mod direct_objects;
+pub mod array_object;
+pub mod boolean_object;
+pub mod dictionary_object;
 pub mod indirect_object;
-pub mod indirect_objects;
+pub mod name_object;
 pub mod null_object;
+pub mod numeric_object;
 pub mod object;
+pub mod stream_object;
+pub mod string_object;

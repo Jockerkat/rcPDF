@@ -16,60 +16,67 @@
 use crate::objects::indirect_object::IndirectObject;
 use crate::objects::object::Object;
 use std::fmt::{Display, Formatter};
+use std::hash::{Hash, Hasher};
 use std::sync::atomic::{AtomicU32, Ordering};
 
-/// This struct represents the basic `Null` object type. The `Null` object has
-/// a type and value that are unequal to those of any other object.
+/// This struct represents the basic `Boolean` object type. `Boolean` objects
+/// represent the logical values `true` and `false` and appear in PDF files
+/// using those keywords.
 ///
 /// # Traits
 ///
-/// This struct derives the following traits:
+/// This struct derives the following trait:
 ///
 /// - `Debug`
-/// - `Hash`
 ///
 /// Additionally, it implements the following traits:
 ///
 /// - [Object](crate::objects::object::Object)
 /// - [IndirectObject](crate::objects::indirect_object::IndirectObject)
 /// - `Display` (as required by the [Object](crate::objects::object::Object) trait)
+/// - `Hash`
+/// - `Eq`
+/// - `PartialEq`
 ///
 /// This struct does not implement nor derive the `Copy` and `Clone` traits, as
 /// copying/cloning an object would result in two objects having the same object
-/// number; as all `NullObject::new()` objects have the same generation number,
+/// number; as all `BooleanObject::new()` objects have the same generation number,
 /// the copied/cloned objects' indirect references wouldn't be unique, violating
 /// the *ISO 32000-1:2008*, 7.3.10 "Indirect Objects" specification.
-#[derive(Debug, Hash)]
-pub struct NullObject {
+#[derive(Debug)]
+pub struct BooleanObject {
     object_number: u32,
     generation_number: u32,
+    value: bool,
 }
 
-impl NullObject {
-    /// Returns a `NullObject`.
+impl BooleanObject {
+    /// Returns a `BooleanObject` with the given Boolean value.
     ///
     /// # Arguments
     ///
     /// - `global_object_number_counter`: a reference to a global object number
     ///                                   counter which is used for the object's
     ///                                   indirect reference
-    pub fn new(global_object_number_counter: &AtomicU32) -> NullObject {
-        NullObject {
+    /// - `value`: the Boolean value the `BooleanObject` should represent
+    pub fn new(global_object_number_counter: &AtomicU32, value: bool) -> BooleanObject {
+        BooleanObject {
             object_number: global_object_number_counter.fetch_add(1, Ordering::Relaxed),
             generation_number: 0,
+            value,
         }
     }
 }
 
-impl Display for NullObject {
+impl Display for BooleanObject {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str("null")
+        write!(f, "{}", self.value)
     }
 }
 
-impl Object for NullObject {}
+impl Object for BooleanObject {}
 
-impl IndirectObject for NullObject {
+impl IndirectObject for BooleanObject {
     fn object_number(&self) -> u32 {
         self.object_number
     }
@@ -79,17 +86,49 @@ impl IndirectObject for NullObject {
     }
 }
 
+impl Hash for BooleanObject {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.value.hash(state)
+    }
+}
+
+impl PartialEq<Self> for BooleanObject {
+    fn eq(&self, other: &Self) -> bool {
+        self.value == other.value
+    }
+}
+
+impl Eq for BooleanObject {}
+
 #[cfg(test)]
 mod tests {
-    use crate::objects::null_object::NullObject;
+    use crate::objects::boolean_object::BooleanObject;
     use std::sync::atomic::AtomicU32;
 
     static GLOBAL_OBJECT_NUMBER_COUNTER: AtomicU32 = AtomicU32::new(1);
 
     #[test]
     fn display_test() {
-        let null_object = NullObject::new(&GLOBAL_OBJECT_NUMBER_COUNTER);
+        let boolean_object_true = BooleanObject::new(&GLOBAL_OBJECT_NUMBER_COUNTER, true);
+        let boolean_object_false = BooleanObject::new(&GLOBAL_OBJECT_NUMBER_COUNTER, false);
 
-        assert_eq!(String::from("null"), null_object.to_string());
+        assert_eq!(String::from("true"), boolean_object_true.to_string());
+        assert_eq!(String::from("false"), boolean_object_false.to_string());
+    }
+
+    #[test]
+    fn equality_test() {
+        let boolean_object_true_0 = BooleanObject::new(&GLOBAL_OBJECT_NUMBER_COUNTER, true);
+        let boolean_object_true_1 = BooleanObject::new(&GLOBAL_OBJECT_NUMBER_COUNTER, true);
+        let boolean_object_false_0 = BooleanObject::new(&GLOBAL_OBJECT_NUMBER_COUNTER, false);
+        let boolean_object_false_1 = BooleanObject::new(&GLOBAL_OBJECT_NUMBER_COUNTER, false);
+
+        // equality
+        assert_eq!(boolean_object_true_0, boolean_object_true_1);
+        assert_eq!(boolean_object_false_0, boolean_object_false_1);
+
+        // inequality
+        assert_ne!(boolean_object_true_0, boolean_object_false_0);
+        assert_ne!(boolean_object_true_1, boolean_object_false_1)
     }
 }

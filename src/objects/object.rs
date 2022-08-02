@@ -13,8 +13,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use std::fmt;
+use std::fmt::{Debug, Display, Formatter};
 
-/// An umbrella trait for all objects in the PDF ISO specification,
-/// as defined in ISO 32000-1:2008, 7 "Syntax", 7.3 "Objects".
-pub trait Object: fmt::Display {}
+/// This trait represents a generic, basic PDF object. All basic PDF objects
+/// implement this trait.
+///
+/// # Traits
+///
+/// This trait inherits the `Display` trait, used to ensure that implementors
+/// of the `Object` trait are correctly written to the output PDF file. Further,
+/// the `Object` trait implements the `Debug` trait for `dyn Object`.
+pub trait Object: Display {}
+
+impl Debug for dyn Object {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self)
+    }
+}
